@@ -4,7 +4,8 @@ public class AplikasiTodolist {
 
     public static void main(String[] args) {
 //        testShowTodoList();
-        testAddTodoList();
+//        testAddTodoList();
+        testRemoveTodoList();
     }
 
     public static void showTodoList(){
@@ -56,8 +57,44 @@ public class AplikasiTodolist {
         showTodoList();
     }
 
-    public static void removeTodoList(){
+    public static boolean removeTodoList(Integer number){
+        if((number-1) >= model.length){
+            return false;
+        }else if(model[number-1] == null){
+            return false;
+        } else {
+            //reorder when delete
+            //01
+            //12- 2-1
+            //23
+            for (int i = number-1; i < model.length; i++) {
+                if(i == (model.length-1)){
+                    model[i]=null;
+                } else{
+                    model[i] = model[i+1];
+                }
+            }
 
+           return true;
+        }
+    }
+
+    public static void testRemoveTodoList() {
+        for (int i = 1; i < 4; i++) {
+            addTodoList("add todo list "+i);
+        }
+//        showTodoList();
+//        System.out.println("^hasil penambahan^");
+        Boolean result;
+//        result = removeTodoList(20);
+//        System.out.println(result);
+//        result = removeTodoList(5);
+//        System.out.println(result);
+//        result = removeTodoList(3);
+//        System.out.println(result);
+
+        result = removeTodoList(1);
+        showTodoList();
     }
 
     /**
