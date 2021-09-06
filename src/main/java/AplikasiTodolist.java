@@ -1,14 +1,32 @@
 public class AplikasiTodolist {
 
-    public static String[] model = new String[2];
+    public static String[] model = new String[10];
+    public static java.util.Scanner scanner =  new java.util.Scanner(System.in);
+
 
     public static void main(String[] args) {
-//        testShowTodoList();
-//        testAddTodoList();
-        testRemoveTodoList();
+        viewShowTodoList();
+
     }
 
+    public static String input(String info){
+        System.out.print(info + " : ");
+        String data = scanner.nextLine();
+        return data;
+    }
+
+    public static void testInput(){
+        String name = input("Nama");
+        System.out.println("Halo " + name);
+
+        String jobs  = input("Jobs");
+        System.out.println("Jobs" + jobs);
+    }
+
+
+
     public static void showTodoList(){
+        System.out.println("TODO LIST:");
         for (int i=0; i< model.length ; i++){
             String todo = model[i];
             int no = i + 1;
@@ -57,6 +75,8 @@ public class AplikasiTodolist {
         showTodoList();
     }
 
+
+
     public static boolean removeTodoList(Integer number){
         if((number-1) >= model.length){
             return false;
@@ -64,10 +84,8 @@ public class AplikasiTodolist {
             return false;
         } else {
             //reorder when delete
-            //01
-            //12- 2-1
-            //23
             for (int i = number-1; i < model.length; i++) {
+                //set when End queque to null
                 if(i == (model.length-1)){
                     model[i]=null;
                 } else{
@@ -100,18 +118,73 @@ public class AplikasiTodolist {
     /**
      * For View
      */
-
     public static void viewShowTodoList(){
 
+        while (true){
+            showTodoList();
+
+            System.out.println("Menu : ");
+            System.out.println("1. Tambah ");
+            System.out.println("2. Hapus");
+            System.out.println("x. Keluar");
+            String input = input("Pilih");
+
+            if (input.equals("1")) {
+                viewAddTodoList();
+            } else if (input.equals("2")){
+                viewRemoveTodoList();
+            } else if(input.equals("x")){
+                break;
+            }else {
+                System.out.println("perintah tidak ditemukan!!!");
+            }
+        }
     }
+    public static void testViewShowTodoList(){
+        for (int i = 1; i < 4; i++) {
+            addTodoList("add todo list "+i);
+        }
+        viewShowTodoList();
+
+    }
+
 
     public static void viewAddTodoList(){
-
+        System.out.println("Tambah TodoList(x jika batal):");
+        String todo = input("Task: ");
+        if (todo.equals("x")) {
+            //batal
+        }else {
+            addTodoList(todo);
+        }
+    }
+    public static void testViewAddTodoList(){
+        for (int i = 0; i < 4; i++) {
+            addTodoList("add todo list "+i);
+        }
+        viewAddTodoList();
+        showTodoList();
     }
 
-
     public static void viewRemoveTodoList(){
-        
+        System.out.println("Hapus urutan(x jika batal)");
+        String number = input("Task ke ");
+        if (number.equals("x")) {
+            //batal
+        }else {
+            boolean success = removeTodoList(Integer.valueOf(number));
+            if (!success){
+                System.out.println("gagal menghapus todolist urutan:" + number);
+            }
+        }
+    }
+    public static void testViewRemoveTodoList(){
+        for (int i = 0; i < 4; i++) {
+            addTodoList("add todo list "+i);
+        }
+        showTodoList();
+        viewRemoveTodoList();
+        showTodoList();
     }
 
 }
